@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "CommentAdministration";
+}
+
+<h2>CommentAdministration</h2>
+
+@(Html.Kendo()
+.Grid<LaptopSystem.Web.Models.CommentViewModel>().Name("comments-grid")
+.Columns(col =>
+        {
+            col.Bound(model => model.Content);
+            col.Bound(model => model.Author);
+            col.Command(command =>
+                {
+                    command.Edit();
+                    command.Destroy();
+                }).Title("Commands");
+        })
+.Pageable()
+.Sortable()
+.Filterable()
+.Editable(edit =>
+        {
+            edit.Mode(GridEditMode.InLine);
+        })
+.DataSource(data =>
+        {
+            data.Ajax()
+                .ServerOperation(true)
+                .PageSize(10)
+                .Model(model =>
+                {
+                    model.Id("Id");
+                    model.Field(comment => comment.Author).Editable(false);
+                })
+                .Read("ReadComments", "CommentAdministration")
+                .Update("UpdateComment", "CommentAdministration")
+                .Destroy("DestroyComment", "CommentAdministration");
+
+        })))
+

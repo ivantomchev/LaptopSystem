@@ -1,0 +1,22 @@
+﻿@model IEnumerable<LaptopSystem.Web.Models.LaptopViewModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+   
+</div>
+
+<div class="row">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        var laptop = Model.ElementAt(i);
+
+        <div class="col-md-4">
+            <h2>@laptop.Manufacturer @laptop.Model</h2>
+            <img src="@laptop.ImageUrl" />
+            <p><a class="btn btn-default" href="@Url.Action("Details", "Laptops", new { laptop.Id })">@laptop.Price</a></p>
+        </div>
+    }
+</div>
